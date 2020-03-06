@@ -1,0 +1,10 @@
+.venv/
+__pycache__
+*.pyc
+.ipynb_checkpoints
+lastfailed
+~$*.pptx
+.pytest_cache
+.coverage
+*.stl
+*.zip
