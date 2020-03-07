@@ -5,7 +5,7 @@ Document how I have set up python on my MacBook Pro.
 
 # Motivation
 
-Several years ago I created a base Anaconda installation with the most up to date python version at that time, 3.6. For a time I added packages as needed to this environment to explore various topics. I also created conda environments to get more recent python versions. For the last year I have begun to follow the standard practice of creating specific non-conda environments for each of my projects using `python -m venv .venv --prompt="project name". My base anaconda installation has become so old and crusty that I can't update it to a more recent python version--the update always fails. Rather than just add more conda environments with later python versions to my old Anaconda base installation, I want to have a setup that allows me to easily update and change any part of it as my needs change and as new python versions become available.
+Several years ago I created a base Anaconda installation with the most up to date python version at that time, 3.6. For a time I added packages as needed to this environment to explore various topics. I also created conda environments to get more recent python versions. For the last year I have begun to follow the standard practice of creating specific non-conda environments for each of my projects using `python -m venv .venv --prompt="<project name>"`. My base anaconda installation has become so old and crusty that I can't update it to a more recent python version--the update always fails. Rather than just add more conda environments with later python versions to my old Anaconda base installation, I want to have a setup that allows me to easily update and change any part of it as my needs change and as new python versions become available.
 
 
 # Approach
@@ -19,9 +19,9 @@ Set up a base Miniconda environment and then create conda environments for parti
   - I will not install any extra python packages here. I can therefore update Anaconda as needed, or delete the whole thing and create a new anaconda environment without affecting any other environments.
   - This will also be the launching point for everyday jupyter lab use.
 - `py37`
-  - Minimal environment to use with `python -m venv .venv --prompt="project name" to create specific Python 3.7 environments for various projects.
+  - Minimal environment to use with `python -m venv .venv --prompt="<project name>"` to create specific Python 3.7 environments for various projects.
 - `py38`
-  - Minimal environment to use with `python -m venv .venv --prompt="project name" to create specific Python 3.8 environments for various projects.
+  - Minimal environment to use with `python -m venv .venv --prompt="<project name>"` to create specific Python 3.8 environments for various projects.
 - Other conda environments as needed
 
 
