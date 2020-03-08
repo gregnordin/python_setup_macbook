@@ -1,11 +1,11 @@
 # Purpose
 
-Document how I have set up python on my MacBook Pro. 
+Document how I set up python on my MacBook Pro. 
 
 
 # Motivation
 
-Several years ago I created a base Anaconda installation with the most up to date python version at that time, 3.6. For a time I added packages as needed to this environment to explore various topics. I also created conda environments to get more recent python versions. For the last year I have begun to follow the standard practice of creating specific non-conda environments for each of my projects using `python -m venv .venv --prompt="<project name>"`. My base anaconda installation has become so old and crusty that I can't update it to a more recent python version--the update always fails. Rather than just add more conda environments with later python versions to my old Anaconda base installation, I want to have a setup that allows me to easily update and change any part of it as my needs change and as new python versions become available.
+Several years ago I created a base Anaconda installation with the most up to date python version at that time, Python 3.6. For a time I added packages as needed to this environment to explore various topics. I also created conda environments to get more recent python versions. For the last year I have begun to follow the standard python best practice of creating specific non-conda environments for each of my projects using `python -m venv .venv --prompt="<project name>"`. My base anaconda installation has become so old and crusty that I can't update it to a more recent python version--the update always fails. Rather than just add more conda environments with later python versions to my old Anaconda base installation, I want to have a setup that allows me to easily update and change any part of it as my needs change and as new python versions become available.
 
 
 # Approach
@@ -106,3 +106,26 @@ Seems to work. Executing `!which python` in the notebook returns `/Users/nordin/
 # Create non-conda project-specific virtual environments with `venv`
 
 See https://github.com/gregnordin/starter_project_files.
+
+## Refresh virtual environment in existing projects
+
+    $ cd <existing project directory>
+
+    # If using old terminal window:
+    $ source ~/.bash_profile
+
+    # Delete old virtual environment
+    $ rm -rf 
+
+    # Create new virtual environment and activate it
+    $ conda activate py37
+    $ python -m venv .venv --prompt="<prompt text>"
+    $ conda deactivate
+    $ source .venv/bin/activate
+
+    # Install packages
+    $ pip install -e .
+
+# Jupyter
+
+See [Install kernel for different environments](https://ipython.readthedocs.io/en/latest/install/kernel_install.html#kernels-for-different-environments).
