@@ -43,6 +43,24 @@ Set up a base Miniconda environment and then create conda environments for parti
 
     $ rm -rf ~/.jupyter/
     $ rm -rf ~/Library/Jupyter
+    $ rm -rf /usr/local/share/jupyter/kernels/*
+
+Note--to see where jupyter keeps its config and other information:
+
+    $ jupyter --paths
+    config:
+        /Users/nordin/.jupyter
+        /Users/nordin/opt/miniconda3/envs/anaconda_py37/etc/jupyter
+        /usr/local/etc/jupyter
+        /etc/jupyter
+    data:
+        /Users/nordin/Library/Jupyter
+        /Users/nordin/opt/miniconda3/envs/anaconda_py37/share/jupyter
+        /usr/local/share/jupyter
+        /usr/share/jupyter
+    runtime:
+        /Users/nordin/Library/Jupyter/runtime
+
 
 ## Install miniconda
 
@@ -70,7 +88,7 @@ The miniconda python version is installed at `~/opt/miniconda3`. Close and open 
     $ conda --version
     conda 4.8.2
 
-## Install environment for jupyter
+## Create environment for jupyter
 
     (base)
     $ conda create -n jupyter_py37 python=3.7
@@ -83,7 +101,7 @@ The miniconda python version is installed at `~/opt/miniconda3`. Close and open 
     Available kernels:
         python3    /Users/nordin/opt/miniconda3/envs/jupyter_py37/share/jupyter/kernels/python3
 
-## Install anaconda environment
+## Create anaconda environment
 
     # Install environment
     (base)
@@ -123,12 +141,12 @@ The miniconda python version is installed at `~/opt/miniconda3`. Close and open 
     $ jupyter lab
     # Yes, it works
 
-## Install python 3.7 environment
+## Create python 3.7 environment
 
     (base)
     $ conda create --name py37 python=3.7
 
-## Install python 3.8 environment
+## Create python 3.8 environment
 
     (base)
     $ conda create --name py38 python=3.8
@@ -173,7 +191,7 @@ See [Install kernel for different environments](https://ipython.readthedocs.io/e
 
 ## Instructions
 
-From within the virtual environment:
+From within the non-conda virtual environment:
 
     (name_of_virtual_environment) (base)
     $ pip install jupyterlab
@@ -182,7 +200,7 @@ From within the virtual environment:
     Available kernels:
         python3    /Users/nordin/Documents/Projects/.../.venv/share/jupyter/kernels/python3
 
-If I also want this virtual environment's python available in my conda jupyter environment also do the following:
+Jupyterlab can now be run from this virtual environment, and its python is the only python available from within jupyterlab. If I also want this virtual environment's python available in my conda jupyter environment do the following:
 
     (name_of_virtual_environment) (base)
     $ python -m ipykernel install --prefix=/Users/nordin/opt/miniconda3/envs/jupyter_py37 --name 'name_of_virtual_environment'
