@@ -70,27 +70,58 @@ The miniconda python version is installed at `~/opt/miniconda3`. Close and open 
     $ conda --version
     conda 4.8.2
 
-## Install anaconda environment
-
-    $ conda create --name anaconda_py37 anaconda
-        ... <lots of stuff> ...
-        #
-        # To activate this environment, use
-        #
-        #     $ conda activate anaconda_py37
-        #
-        # To deactivate an active environment, use
-        #
-        #     $ conda deactivate
-
-### Check that jupyterlab works
+## Install environment for jupyter
 
     (base)
-    $ conda activate anaconda_py37
-    (anaconda_py37)
-    $ jupyter lab
+    $ conda create -n jupyter_py37 python=3.7
+    (base)
+    $ conda activate jupyter_py37
+    (jupyter_py37)
+    $ pip install jupyterlab
+    (jupyter_py37)
+    $ jupyter kernelspec list
+    Available kernels:
+        python3    /Users/nordin/opt/miniconda3/envs/jupyter_py37/share/jupyter/kernels/python3
 
-Seems to work. Executing `!which python` in the notebook returns `/Users/nordin/opt/miniconda3/envs/anaconda_py37/bin/python`
+## Install anaconda environment
+
+    # Install environment
+    (base)
+    $ conda create --name anaconda_py37 anaconda
+
+    # Activate environment
+    (base)
+    $ conda activate anaconda_py37
+
+    # Install jupyterlab
+    (anaconda_py37)
+    $ pip install jupyterlab
+
+    # Double check that the kernel has been installed
+    (anaconda_py37)
+    $ jupyter kernelspec list
+    Available kernels:
+        python3    /Users/nordin/opt/miniconda3/envs/anaconda_py37/share/jupyter/kernels/python3
+
+    # Make the kernel available in `jupyter_py37` environment
+    (anaconda_py37)
+    $ python -m ipykernel install --prefix=/Users/nordin/opt/miniconda3/envs/jupyter_py37 --name 'anaconda_py37'
+
+    # Switch to the `jupyter_py37` environment
+    (anaconda_py37)
+    $ conda activate jupyter_py37
+
+    # Double check that the anaconda_py37 kernel is available
+    (jupyter_py37)
+    $ jupyter kernelspec list
+    Available kernels:
+      anaconda_py37    /Users/nordin/opt/miniconda3/envs/jupyter_py37/share/jupyter/kernels/anaconda_py37
+      python3          /Users/nordin/opt/miniconda3/envs/jupyter_py37/share/jupyter/kernels/python3
+
+    # Open jupyterlab and make sure the kernel is available
+    (jupyter_py37)
+    $ jupyter lab
+    # Yes, it works
 
 ## Install python 3.7 environment
 
@@ -115,17 +146,51 @@ See https://github.com/gregnordin/starter_project_files.
     $ source ~/.bash_profile
 
     # Delete old virtual environment
-    $ rm -rf 
+    $ rm -rf .venv
 
-    # Create new virtual environment and activate it
+    # Create new virtual environment based on conda `py37` environment
     $ conda activate py37
     $ python -m venv .venv --prompt="<prompt text>"
     $ conda deactivate
+
+    # Activate new virtual environment
     $ source .venv/bin/activate
 
     # Install packages
+    (prompt text)
     $ pip install -e .
+
 
 # Jupyter
 
+## Objective
+
+For each non-conda virtual environment I create, I want to be able to start jupyterlab from within it and have the virtual environment python be the only python available. For some non-conda virtual environments, I want them to also be available from within my main conda jupyter environment.
+
+## Information
+
 See [Install kernel for different environments](https://ipython.readthedocs.io/en/latest/install/kernel_install.html#kernels-for-different-environments).
+
+## Instructions
+
+From within the virtual environment:
+
+    (name_of_virtual_environment) (base)
+    $ pip install jupyterlab
+    (name_of_virtual_environment) (base)
+    $ jupyter kernelspec list
+    Available kernels:
+        python3    /Users/nordin/Documents/Projects/.../.venv/share/jupyter/kernels/python3
+
+If I also want this virtual environment's python available in my conda jupyter environment also do the following:
+
+    (name_of_virtual_environment) (base)
+    $ python -m ipykernel install --prefix=/Users/nordin/opt/miniconda3/envs/jupyter_py37 --name 'name_of_virtual_environment'
+
+This will throw a warning, but it can be ignored. Going to the jupyter_py37 environment:
+
+    (jupyter_py37)
+    $ jupyter kernelspec list
+    Available kernels:
+      python3              /Users/nordin/opt/miniconda3/envs/jupyter_py37/share/jupyter/kernels/python3
+      name_of_virtual_environment    /Users/nordin/opt/miniconda3/envs/jupyter_py37/share/jupyter/kernels/name_of_virtual_environment
