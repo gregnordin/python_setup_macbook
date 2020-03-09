@@ -5,24 +5,28 @@ Document how I set up python on my MacBook Pro.
 
 # Motivation
 
-Several years ago I created a base Anaconda installation with the most up to date python version at that time, Python 3.6. For a time I added packages as needed to this environment to explore various topics. I also created conda environments to get more recent python versions. For the last year I have begun to follow the standard python best practice of creating specific non-conda environments for each of my projects using `python -m venv .venv --prompt="<project name>"`. My base anaconda installation has become so old and crusty that I can't update it to a more recent python version--the update always fails. Rather than just add more conda environments with later python versions to my old Anaconda base installation, I want to have a setup that allows me to easily update and change any part of it as my needs change and as new python versions become available.
+Several years ago I created a base Anaconda installation with the current python version, Python 3.6. For a time I added packages as needed to this environment as I did various projects. I also created conda environments to get more recent python versions. 
+
+For the last year I have begun to follow the standard python best practice of creating specific non-conda environments for each of my projects using `python -m venv .venv --prompt="<project name>"`. In the meantime, my base anaconda installation has become so old and crusty that I can't update it to a more recent python version--the update always fails. Rather than just add more conda environments with later python versions to my old Anaconda base installation, I want to have a setup that allows me to easily update and change any part of it as my needs change and as new python versions become available. I also want to set up JupyterLab so that I don't have a bunch of extraneous kernels floating around cluttering things up, while still having some virtual environments available as specific kernels.  
 
 
 # Approach
 
-Set up a base Miniconda environment and then create conda environments for particular purposes. Some of these conda environments will be used only as the base environment for creating normal `venv` environments. Conda environments include the following:
+Set up a base Miniconda environment and create conda environments for particular purposes. Some of these conda environments will be used only as the base environment for creating normal `venv` environments. Conda environments include the following:
 
 - Base miniconda environment
-  - Bare root environment that will be easy to update to future versions of python as needed. I don't plan to use it for anything other than as a base to create conda environments because such conda environments are very easy to create and delete as needed and don't affect the root environment.
-- `anaconda_py37` - Anaconda 2019-10 environment
-  - This will be my main python environment for everyday use. 
-  - I will not install any extra python packages here. I can therefore update Anaconda as needed, or delete the whole thing and create a new anaconda environment without affecting any other environments.
-  - This will also be the launching point for everyday jupyter lab use.
+  - Bare root environment that will be easy to update to future versions of python as needed. I don't plan to use it for anything other than as a base to create conda environments. Such conda environments are very easy to create and delete as needed and don't affect the root environment. Likewise, the base miniconda environment is so minimal that it should be easily updateable.
+- `jupyter_py37` 
+    - Minimal environment from which other virtual environment kernels are available.
+    - This will be the launching point for everyday JupyterLab use.
+- `anaconda_py37` 
+    - Anaconda 2019-10 environment
+    - This will be my main python environment for everyday use. 
+    - I will not install any extra python packages here. I can therefore update Anaconda as needed, or delete the whole thing and create a new anaconda environment without affecting other environments.
 - `py37`
-  - Minimal environment to use with `python -m venv .venv --prompt="<project name>"` to create specific Python 3.7 environments for various projects.
+    - Minimal environment to use with `python -m venv .venv --prompt="<project name>"` to create specific Python 3.7 environments for various projects.
 - `py38`
-  - Minimal environment to use with `python -m venv .venv --prompt="<project name>"` to create specific Python 3.8 environments for various projects.
-- Other conda environments as needed
+    - Minimal environment to use with `python -m venv .venv --prompt="<project name>"` to create specific Python 3.8 environments for various projects.
 
 
 # Installation
@@ -154,7 +158,7 @@ The miniconda python version is installed at `~/opt/miniconda3`. Close and open 
 
 # Create non-conda project-specific virtual environments with `venv`
 
-See https://github.com/gregnordin/starter_project_files.
+See `https://github.com/gregnordin/starter_project_files`.
 
 ## Refresh virtual environment in existing projects
 
@@ -205,7 +209,7 @@ Jupyterlab can now be run from this virtual environment, and its python is the o
     (name_of_virtual_environment) (base)
     $ python -m ipykernel install --prefix=/Users/nordin/opt/miniconda3/envs/jupyter_py37 --name 'name_of_virtual_environment'
 
-This will throw a warning, but it can be ignored. Going to the jupyter_py37 environment:
+This will throw a warning, but it can be ignored. Going to the `jupyter_py37` environment:
 
     (jupyter_py37)
     $ jupyter kernelspec list
