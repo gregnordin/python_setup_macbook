@@ -216,3 +216,52 @@ This will throw a warning, but it can be ignored. Going to the `jupyter_py37` en
     Available kernels:
       python3              /Users/nordin/opt/miniconda3/envs/jupyter_py37/share/jupyter/kernels/python3
       name_of_virtual_environment    /Users/nordin/opt/miniconda3/envs/jupyter_py37/share/jupyter/kernels/name_of_virtual_environment
+
+## Usage
+
+### Start jupyterlab from within environment (regular)
+
+Activate environment: `conda activate jupyter_py37` OR `source .venv/bin/`activate from within correct directory
+
+    # Start jupyterlab
+    (<text for prompt>)
+    $ jupyter lab
+
+### Start jupyterlab from within environment (background)
+
+Activate environment: `conda activate jupyter_py37` OR `source .venv/bin/`activate from within correct directory
+
+    # Start jupyterlab in the background so the terminal remains free to use
+    (<text for prompt>)
+    $ nohup jupyter lab &
+
+    # Kill jupyterlab that's running in the background
+    $ jupyter notebook list
+        Currently running servers:
+        http://localhost:8888/?token=blah :: /Users/nordin/Documents/Projects/Python/190709_starter_project_files
+    # Note the port jupyter is running on (8888). Use this to find the PID of the jupyter process
+    $ lsof -n -i4TCP:8888
+        COMMAND     PID   USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
+        python3.7 38870 nordin    8u  IPv4 0xb27f89b37e23f69b      0t0  TCP 127.0.0.1:ddi-tcp-1 (LISTEN)
+    # Now kill the jupyter process
+    $ kill 38870
+
+### Remove jupyter kernel
+
+    $ jupyter kernelspec uninstall <kernel_to_uninstall>
+
+### Use TOC with jupyterlab
+
+    (<text for prompt>)
+    $ jupyter labextension install @jupyterlab/toc
+
+### Use jupyter_contrib_nbextensions with jupyter notebooks
+
+    Only works with `jupyter notebook`, not 'jupyter lab`
+
+    (<text for prompt>)
+    $ pip install jupyter_contrib_nbextensions
+    (<text for prompt>)
+    $ jupyter contrib nbextension install --sys-prefix
+
+In the last command, `--sys-prefix` is the critical part to get the extensions installed locally in the virtual environment.
