@@ -92,7 +92,7 @@ The miniconda python version is installed at `~/opt/miniconda3`. Close and open 
     $ conda --version
     conda 4.8.2
 
-## Create environment for jupyter
+## Create environment for jupyter & add extensions I like
 
     (base)
     $ conda create -n jupyter_py37 python=3.7
@@ -104,6 +104,13 @@ The miniconda python version is installed at `~/opt/miniconda3`. Close and open 
     $ jupyter kernelspec list
     Available kernels:
         python3    /Users/nordin/opt/miniconda3/envs/jupyter_py37/share/jupyter/kernels/python3
+    (jupyter_py37)
+    $ jupyter labextension install @jupyterlab/toc
+    (jupyter_py37)
+    $ pip install jupyter_contrib_nbextensions
+    (jupyter_py37)
+    $ jupyter contrib nbextension install --sys-prefix
+    
 
 ## Create anaconda environment
 
