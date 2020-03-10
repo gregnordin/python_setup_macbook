@@ -18,7 +18,7 @@ Set up a base Miniconda environment and create conda environments for particular
   - Bare root environment that will be easy to update to future versions of python as needed. I don't plan to use it for anything other than as a base to create conda environments. Such conda environments are very easy to create and delete as needed and don't affect the root environment. Likewise, the base miniconda environment is so minimal that it should be easily updateable.
 - `jupyter_py37` 
     - Minimal environment from which other virtual environment kernels are available.
-    - This will be the launching point for everyday JupyterLab use.
+    - This will be the launching point for everyday JupyterLab or Jupyter notebook use.
 - `anaconda_py37` 
     - Anaconda 2019-10 environment
     - This will be my main python environment for everyday use. 
@@ -49,7 +49,7 @@ Set up a base Miniconda environment and create conda environments for particular
     $ rm -rf ~/Library/Jupyter
     $ rm -rf /usr/local/share/jupyter/kernels/*
 
-Note--to see where jupyter keeps its config and other information:
+Note: to see where jupyter keeps its config and other information do the following:
 
     $ jupyter --paths
     config:
@@ -70,7 +70,7 @@ Note--to see where jupyter keeps its config and other information:
 
 Download installer `Miniconda3 MacOSX 64-bit pkg` from [Miniconda](https://docs.conda.io/en/latest/miniconda.html). Double click on downloaded file and go through installation process.
 
-The miniconda python version is installed at `~/opt/miniconda3`. Close and open terminal window, or run `$ source ~/.bash_profile` to activate new miniconda python installation. This should put `~/opt/miniconda3/bin` at the beginning of the PATH variable (`$ echo $PATH` to check). Now we get the following:
+The miniconda python version is installed at `~/opt/miniconda3`. The PATH has been modified in `~/.bash_profile` but still needs to be activated in any open terminal windows. Either close terminal window and open a new one, or run `$ source ~/.bash_profile` to update PATH so that the new miniconda python installation becomes the default. You can check by running `echo $PATH`, in which case `~/opt/miniconda3/bin` should be the first item. Now we get the following:
 
     (base)
     $ which python
@@ -101,12 +101,18 @@ The miniconda python version is installed at `~/opt/miniconda3`. Close and open 
     (jupyter_py37)
     $ pip install jupyterlab
     (jupyter_py37)
+
+    # Double check that the kernel has been installed
     $ jupyter kernelspec list
     Available kernels:
         python3    /Users/nordin/opt/miniconda3/envs/jupyter_py37/share/jupyter/kernels/python3
     (jupyter_py37)
+
+    # I find TOC is a must-have jupyter lab extension
     $ jupyter labextension install @jupyterlab/toc
     (jupyter_py37)
+
+    # In case I use jupyter notebook, install nice pack of extensions
     $ pip install jupyter_contrib_nbextensions
     (jupyter_py37)
     $ jupyter contrib nbextension install --sys-prefix
@@ -125,12 +131,6 @@ The miniconda python version is installed at `~/opt/miniconda3`. Close and open 
     # Install jupyterlab
     (anaconda_py37)
     $ pip install jupyterlab
-
-    # Double check that the kernel has been installed
-    (anaconda_py37)
-    $ jupyter kernelspec list
-    Available kernels:
-        python3    /Users/nordin/opt/miniconda3/envs/anaconda_py37/share/jupyter/kernels/python3
 
     # Make the kernel available in `jupyter_py37` environment
     (anaconda_py37)
@@ -186,7 +186,7 @@ See `https://github.com/gregnordin/starter_project_files`.
     $ source .venv/bin/activate
 
     # Install packages
-    (prompt text)
+    (<prompt text>)
     $ pip install -e .
 
 
@@ -194,7 +194,7 @@ See `https://github.com/gregnordin/starter_project_files`.
 
 ## Objective
 
-For each non-conda virtual environment I create, I want to be able to start jupyterlab from within it and have the virtual environment python be the only python available. For some non-conda virtual environments, I want them to also be available from within my main conda jupyter environment.
+For each non-conda virtual environment I create, I often want to be able to start jupyterlab from within it and have the virtual environment python be the only python available. For some non-conda virtual environments, I want them to also be available from within my main conda jupyter environment.
 
 ## Information
 
@@ -211,7 +211,9 @@ From within the non-conda virtual environment:
     Available kernels:
         python3    /Users/nordin/Documents/Projects/.../.venv/share/jupyter/kernels/python3
 
-Jupyterlab can now be run from this virtual environment, and its python is the only python available from within jupyterlab. If I also want this virtual environment's python available in my conda jupyter environment do the following:
+Jupyterlab can now be run from this virtual environment, and its python is the only python available from within jupyterlab. 
+
+If I also want this virtual environment's python available in my conda jupyter environment do the following:
 
     (name_of_virtual_environment) (base)
     $ python -m ipykernel install --prefix=/Users/nordin/opt/miniconda3/envs/jupyter_py37 --name 'name_of_virtual_environment'
@@ -228,7 +230,7 @@ This will throw a warning, but it can be ignored. Going to the `jupyter_py37` en
 
 ### Start jupyterlab from within environment (regular)
 
-Activate environment: `conda activate jupyter_py37` OR `source .venv/bin/`activate from within correct directory
+Activate environment: `conda activate jupyter_py37` OR `source .venv/bin/activate` from within correct directory
 
     # Start jupyterlab
     (<text for prompt>)
@@ -236,7 +238,7 @@ Activate environment: `conda activate jupyter_py37` OR `source .venv/bin/`activa
 
 ### Start jupyterlab from within environment (background)
 
-Activate environment: `conda activate jupyter_py37` OR `source .venv/bin/`activate from within correct directory
+Activate environment: `conda activate jupyter_py37` OR `source .venv/bin/activate` from within correct directory
 
     # Start jupyterlab in the background so the terminal remains free to use
     (<text for prompt>)
