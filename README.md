@@ -117,6 +117,14 @@ The miniconda python version is installed at `~/opt/miniconda3`. The PATH has be
     (jupyter_py37)
     $ jupyter contrib nbextension install --sys-prefix
     
+    # Also install https://github.com/matplotlib/ipympl
+    conda install -c conda-forge ipympl
+    # Notebook
+    conda install -c conda-forge widgetsnbextension
+    # JupyterLab
+    # conda install nodejs
+    jupyter labextension install @jupyter-widgets/jupyterlab-manager
+    jupyter labextension install jupyter-matplotlib
 
 ## Create anaconda environment
 
@@ -200,7 +208,7 @@ For each non-conda virtual environment I create, I often want to be able to star
 
 See [Install kernel for different environments](https://ipython.readthedocs.io/en/latest/install/kernel_install.html#kernels-for-different-environments).
 
-## Instructions
+## Install
 
 From within the non-conda virtual environment:
 
@@ -225,6 +233,34 @@ This will throw a warning, but it can be ignored. Going to the `jupyter_py37` en
     Available kernels:
       python3              /Users/nordin/opt/miniconda3/envs/jupyter_py37/share/jupyter/kernels/python3
       name_of_virtual_environment    /Users/nordin/opt/miniconda3/envs/jupyter_py37/share/jupyter/kernels/name_of_virtual_environment
+
+## Set default browser for jupyterlab/notebook
+
+Use the following instructions to set a different browser as default than your system default browser. For example, my system default browser is Brave, but when I execute `jupyter lab` or `jupyter notebook` I want jupyter to automatically open in Opera.
+
+### Create `jupyter_notebook_config.py`
+
+    (base)
+    $ conda activate jupyter_py37
+    (jupyter_py37)
+	$ jupyter notebook --generate-config
+    
+    
+### Edit `jupyter_notebook_config.py`
+
+Open `~/.jupyter/jupyter_notebook_config.py` in editor. 
+
+Under this line `# c.NotebookApp.browser = ''` add the following:
+
+	import webbrowser
+    webbrowser.register('opera', None, webbrowser.MacOSXOSAScript('/Applications/Opera.app'))
+    c.NotebookApp.browser = 'opera'
+
+
+**Now `$ jupyter notebook` opens the initial notebook window in Opera!**
+
+**Critical part**: since I'm on Mac OS I must use `webbrowser.MacOSXOSAScript('/Applications/Opera.app')` instead of `webbrowser.GenericBrowser('/Applications/Opera.app')` as directed in many non-mac instructions found online.
+
 
 ## Usage
 
