@@ -310,3 +310,8 @@ Activate environment: `conda activate jupyter_py37` OR `source .venv/bin/activat
     $ jupyter contrib nbextension install --sys-prefix
 
 In the last command, `--sys-prefix` is the critical part to get the extensions installed locally in the virtual environment.
+
+
+# Alternative
+
+Use pyenv and pipx with venv. See [Modern Python Developer's Tookit - Pyenv](https://pycon.switowski.com/02-packages/pyenv/) and [Modern Python Developer's Tookit - pipx](https://pycon.switowski.com/02-packages/pipx/) by Sebastian Witowski. His Pycon 2020 presentation: [Tutorial: Sebastian Witowski - Modern Python Developer's Toolkit - Pycon 2020](https://www.youtube.com/watch?v=WkUBx3g2QfQ)
