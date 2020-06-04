@@ -312,6 +312,8 @@ Activate environment: `conda activate jupyter_py37` OR `source .venv/bin/activat
 In the last command, `--sys-prefix` is the critical part to get the extensions installed locally in the virtual environment.
 
 
-# Alternative
+# Alternatives
 
-Use pyenv and pipx with venv. See [Modern Python Developer's Tookit - Pyenv](https://pycon.switowski.com/02-packages/pyenv/) and [Modern Python Developer's Tookit - pipx](https://pycon.switowski.com/02-packages/pipx/) by Sebastian Witowski. His Pycon 2020 presentation: [Tutorial: Sebastian Witowski - Modern Python Developer's Toolkit - Pycon 2020](https://www.youtube.com/watch?v=WkUBx3g2QfQ)
+Use pyenv and pipx with venv. See [Modern Python Developer's Tookit - Pyenv](https://pycon.switowski.com/02-packages/pyenv/) and [Modern Python Developer's Tookit - pipx](https://pycon.switowski.com/02-packages/pipx/) by Sebastian Witowski. His Pycon 2020 presentation: [Tutorial: Sebastian Witowski - Modern Python Developer's Toolkit - Pycon 2020](https://www.youtube.com/watch?v=WkUBx3g2QfQ).
+
+Another older (2017) approach based on pyenv and with a focus on jupyter: [The definitive guide to setup my Python workspace](https://medium.com/@henriquebastos/the-definitive-guide-to-setup-my-python-workspace-628d68552e14).
