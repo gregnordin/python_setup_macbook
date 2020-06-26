@@ -314,6 +314,6 @@ In the last command, `--sys-prefix` is the critical part to get the extensions i
 
 # Alternatives
 
-Use pyenv and pipx with venv. See Sebastian Witowski's Pycon 2020 presentation: [Tutorial: Sebastian Witowski - Modern Python Developer's Toolkit - Pycon 2020](https://www.youtube.com/watch?v=WkUBx3g2QfQ). See also [Managing Multiple Python Versions With pyenv](https://realpython.com/intro-to-pyenv).
+Use pyenv and pipx with venv. See Sebastian Witowski's Pycon 2020 presentation: [Tutorial: Sebastian Witowski - Modern Python Developer's Toolkit - Pycon 2020](https://www.youtube.com/watch?v=WkUBx3g2QfQ). See also [Managing Multiple Python Versions With pyenv](https://realpython.com/intro-to-pyenv) and [How to Set Up a Python Project For Automation and Collaboration](https://eugeneyan.com/writing/setting-up-python-project-for-automation-and-collaboration/).
 
 Another older (2017) approach based on pyenv and with a focus on jupyter: [The definitive guide to setup my Python workspace](https://medium.com/@henriquebastos/the-definitive-guide-to-setup-my-python-workspace-628d68552e14).
