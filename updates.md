@@ -71,3 +71,23 @@
     (jupyter_py38)
     $ jupyter contrib nbextension install --sys-prefix
     # Tried it and works great - TOC is enabled
+    
+### Add a python venv kernel to `jupyter_py38`
+ 
+ 	# Activate desired python venv
+    (base)
+ 	$ source ~/python_envs/voila_opencv/bin/activate
+    (voila_opencv) (base)
+ 	$ python -m ipykernel install --prefix=/Users/nordin/opt/miniconda3/envs/jupyter_py38 --name 'voila_opencv'
+    (voila_opencv) (base)
+    $ deactivate
+    (base)
+    $ conda activate jupyter_py38
+    (jupyter_py38)
+    $ jupyter kernelspec list
+    Available kernels:
+      javascript                                                /Users/nordin/Library/Jupyter/kernels/javascript
+      python37                                                  /Users/nordin/Library/Jupyter/kernels/python37
+      anaconda_py38                                             /Users/nordin/opt/miniconda3/envs/jupyter_py38/share/jupyter/kernels/anaconda_py38
+      python3                                                   /Users/nordin/opt/miniconda3/envs/jupyter_py38/share/jupyter/kernels/python3
+      voila_opencv                                              /Users/nordin/opt/miniconda3/envs/jupyter_py38/share/jupyter/kernels/voila_opencv
