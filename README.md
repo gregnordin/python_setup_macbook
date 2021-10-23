@@ -228,6 +228,13 @@ Note that the kernel is put in ~/Library/Jupyter/kernels, which makes it availab
       python3              /Users/nordin/opt/miniconda3/envs/jupyter_py37/share/jupyter/kernels/python3
       name_of_virtual_environment    /Users/nordin/Library/Jupyter/kernels/name_of_virtual_environment
 
+If you should wish to remove the environment from Jupyter, activate a jupyter environment and execute the following:
+
+    (jupyter_py37)
+    $ jupyter kernelspec uninstall name_of_virtual_environment
+
+This will remove the virtual environment as a kernel for any instance of Jupyter (except if you invoke jupyter from within the virtual environment itself).
+
 ## Set default browser for jupyterlab/notebook
 
 Use the following instructions to set a different browser as default than your system default browser. For example, my system default browser is Brave, but when I execute `jupyter lab` or `jupyter notebook` I want jupyter to automatically open in Opera.
