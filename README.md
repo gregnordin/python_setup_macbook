@@ -218,15 +218,15 @@ Jupyterlab can now be run from this virtual environment, and its python is the o
 If I also want this virtual environment's python available in my conda jupyter environment do the following:
 
     (name_of_virtual_environment) (base)
-    $ python -m ipykernel install --prefix=/Users/nordin/opt/miniconda3/envs/jupyter_py37 --name 'name_of_virtual_environment'
+    $ python -m ipykernel install --user --name=name_of_virtual_environment
 
-This will throw a warning, but it can be ignored. Going to the `jupyter_py37` environment:
+Note that the kernel is put in ~/Library/Jupyter/kernels, which makes it available to any instance of Jupyter when you start jupyterlab or jupyter notebook. Going to the `jupyter_py37` environment:
 
     (jupyter_py37)
     $ jupyter kernelspec list
     Available kernels:
       python3              /Users/nordin/opt/miniconda3/envs/jupyter_py37/share/jupyter/kernels/python3
-      name_of_virtual_environment    /Users/nordin/opt/miniconda3/envs/jupyter_py37/share/jupyter/kernels/name_of_virtual_environment
+      name_of_virtual_environment    /Users/nordin/Library/Jupyter/kernels/name_of_virtual_environment
 
 ## Set default browser for jupyterlab/notebook
 
