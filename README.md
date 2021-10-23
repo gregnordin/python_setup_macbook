@@ -1,14 +1,12 @@
 # Purpose
 
-Document how I set up python on my MacBook Pro. 
-
+Document how I set up python on my MacBook Pro.
 
 # Motivation
 
-Several years ago I created a base Anaconda installation with the current python version, Python 3.6. For a time I added packages as needed to this environment as I did various projects. I also created conda environments to get more recent python versions. 
+Several years ago I created a base Anaconda installation with the current python version, Python 3.6. For a time I added packages as needed to this environment as I did various projects. I also created conda environments to get more recent python versions.
 
-For the last year I have begun to follow the standard python best practice (see, for example, [A quick-and-dirty guide on how to install packages for Python](https://snarky.ca/a-quick-and-dirty-guide-on-how-to-install-packages-for-python/) by Brett Cannon, or the [Creating Virtual Environments](https://packaging.python.org/tutorials/installing-packages/#creating-virtual-environments) at python.org) of creating specific non-conda environments for each of my projects using `python -m venv .venv --prompt="<project name>"`. In the meantime, my base anaconda installation has become so old and crusty that I can't update it to a more recent python version--the update always fails. Rather than just add more conda environments with later python versions to my old Anaconda base installation, I want to have a setup that allows me to easily update and change any part of it as my needs change and as new python versions become available. I also want to set up JupyterLab so that I don't have a bunch of extraneous kernels floating around cluttering things up, while still having some virtual environments available as specific kernels.  
-
+For the last year I have begun to follow the standard python best practice (see, for example, [A quick-and-dirty guide on how to install packages for Python](https://snarky.ca/a-quick-and-dirty-guide-on-how-to-install-packages-for-python/) by Brett Cannon, or [Creating Virtual Environments](https://packaging.python.org/tutorials/installing-packages/#creating-virtual-environments) at python.org) of creating specific non-conda environments for each of my projects using `python -m venv .venv --prompt="<project name>"`. In the meantime, my base anaconda installation has become so old and crusty that I can't update it to a more recent python version--the update always fails. Rather than just add more conda environments with later python versions to my old Anaconda base installation, I want to have a setup that allows me to easily update and change any part of it as my needs change and as new python versions become available. I also want to set up JupyterLab so that I don't have a bunch of extraneous kernels floating around cluttering things up, while still having some virtual environments available as specific kernels.
 
 # Approach
 
@@ -16,18 +14,17 @@ Set up a base Miniconda environment and create conda environments for particular
 
 - Base miniconda environment
   - Bare root environment that will be easy to update to future versions of python as needed. I don't plan to use it for anything other than as a base to create conda environments. Such conda environments are very easy to create and delete as needed and don't affect the root environment. Likewise, the base miniconda environment is so minimal that it should be easily updateable.
-- `jupyter_py37` 
-    - Minimal environment from which other virtual environment kernels are available.
-    - This will be the launching point for everyday JupyterLab or Jupyter notebook use.
-- `anaconda_py37` 
-    - Anaconda 2019-10 environment
-    - This will be my main python environment for everyday use. 
-    - I will not install any extra python packages here. I can therefore update Anaconda as needed, or delete the whole thing and create a new anaconda environment without affecting other environments.
+- `jupyter_py37`
+  - Minimal environment from which other virtual environment kernels are available.
+  - This will be the launching point for everyday JupyterLab or Jupyter notebook use.
+- `anaconda_py37`
+  - Anaconda 2019-10 environment
+  - This will be my main python environment for everyday use.
+  - I will not install any extra python packages here. I can therefore update Anaconda as needed, or delete the whole thing and create a new anaconda environment without affecting other environments.
 - `py37`
-    - Minimal environment to use with `python -m venv .venv --prompt="<project name>"` to create specific Python 3.7 environments for various projects.
+  - Minimal environment to use with `python -m venv .venv --prompt="<project name>"` to create specific Python 3.7 environments for various projects.
 - `py38`
-    - Minimal environment to use with `python -m venv .venv --prompt="<project name>"` to create specific Python 3.8 environments for various projects.
-
+  - Minimal environment to use with `python -m venv .venv --prompt="<project name>"` to create specific Python 3.8 environments for various projects.
 
 # Installation
 
@@ -38,7 +35,7 @@ Set up a base Miniconda environment and create conda environments for particular
     $ rm -rf ~/anaconda3
     $ rm -rf ~/.conda
     $ rm -rf ~/.anaconda
-    $ rm -rf ~/.condarc 
+    $ rm -rf ~/.condarc
     $ rm -rf ~/.condamanager/
     $ rm -rf ~/.jupyter/
     $ rm -rf ~/.spyder*
@@ -64,7 +61,6 @@ Note: to see where jupyter keeps its config and other information do the followi
         /usr/share/jupyter
     runtime:
         /Users/nordin/Library/Jupyter/runtime
-
 
 ## Install miniconda
 
@@ -116,7 +112,7 @@ The miniconda python version is installed at `~/opt/miniconda3`. The PATH has be
     $ pip install jupyter_contrib_nbextensions
     (jupyter_py37)
     $ jupyter contrib nbextension install --sys-prefix
-    
+
     # Also install https://github.com/matplotlib/ipympl
     conda install -c conda-forge ipympl
     # Notebook
@@ -170,7 +166,6 @@ The miniconda python version is installed at `~/opt/miniconda3`. The PATH has be
     (base)
     $ conda create --name py38 python=3.8
 
-
 # Create non-conda project-specific virtual environments with `venv`
 
 See `https://github.com/gregnordin/starter_project_files`.
@@ -197,7 +192,6 @@ See `https://github.com/gregnordin/starter_project_files`.
     (<prompt text>)
     $ pip install -e .
 
-
 # Jupyter
 
 ## Objective
@@ -219,7 +213,7 @@ From within the non-conda virtual environment:
     Available kernels:
         python3    /Users/nordin/Documents/Projects/.../.venv/share/jupyter/kernels/python3
 
-Jupyterlab can now be run from this virtual environment, and its python is the only python available from within jupyterlab. 
+Jupyterlab can now be run from this virtual environment, and its python is the only python available from within jupyterlab.
 
 If I also want this virtual environment's python available in my conda jupyter environment do the following:
 
@@ -243,24 +237,21 @@ Use the following instructions to set a different browser as default than your s
     (base)
     $ conda activate jupyter_py37
     (jupyter_py37)
-	$ jupyter notebook --generate-config
-    
-    
+    $ jupyter notebook --generate-config
+
 ### Edit `jupyter_notebook_config.py`
 
-Open `~/.jupyter/jupyter_notebook_config.py` in editor. 
+Open `~/.jupyter/jupyter_notebook_config.py` in editor.
 
 Under this line `# c.NotebookApp.browser = ''` add the following:
 
-	import webbrowser
+    import webbrowser
     webbrowser.register('opera', None, webbrowser.MacOSXOSAScript('/Applications/Opera.app'))
     c.NotebookApp.browser = 'opera'
-
 
 **Now `$ jupyter notebook` opens the initial notebook window in Opera!**
 
 **Critical part**: since I'm on Mac OS I must use `webbrowser.MacOSXOSAScript('/Applications/Opera.app')` instead of `webbrowser.GenericBrowser('/Applications/Opera.app')` as directed in many non-mac instructions found online.
-
 
 ## Usage
 
@@ -310,7 +301,6 @@ Activate environment: `conda activate jupyter_py37` OR `source .venv/bin/activat
     $ jupyter contrib nbextension install --sys-prefix
 
 In the last command, `--sys-prefix` is the critical part to get the extensions installed locally in the virtual environment.
-
 
 # Alternatives
 
