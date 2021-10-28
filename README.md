@@ -10,7 +10,7 @@ For the last year I have begun to follow the standard python best practice (see,
 
 # Approach
 
-Set up a base Miniconda environment and create conda environments for particular purposes. Some of these conda environments will be used only as the base environment for creating normal `venv` environments. Conda environments include the following:
+Set up a base Miniconda environment and create conda environments for particular purposes. Some of these conda environments will be used only as the base environment for creating normal `venv` environments with packages installed with `pip`. See [Pip vs Conda: an in-depth comparison of Python’s two packaging systems](https://pythonspeed.com/articles/conda-vs-pip/) for a good comparison of pip vs conda. My conda environments include the following:
 
 - Base miniconda environment
   - Bare root environment that will be easy to update to future versions of python as needed. I don't plan to use it for anything other than as a base to create conda environments. Such conda environments are very easy to create and delete as needed and don't affect the root environment. Likewise, the base miniconda environment is so minimal that it should be easily updateable.
