@@ -8,3 +8,5 @@ lastfailed
 .coverage
 *.stl
 *.zip
+README.html
+README_files
