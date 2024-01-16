@@ -2,6 +2,247 @@
 
 Document how I set up python on my MacBook Pro.
 
+Updated 1/15/24.
+
+# Motivation
+
+In early 2022 when I transferred my files and projects from a 2018 MacBook Pro (Intel i7) to a new 2021 M1 Max MacBook Pro (Apple Silicon), my miniconda installation came with it, which means my base environment is still for Intel processors. I've had problems lately with installing Apple Silicon-specific python packages and am just deleting miniconda and my python environments and start from scratch. 
+
+# Approach
+
+I'm following [Managing Python installations in 2023](https://alisterburt.com/blog/2023/05/27/managing-python-installations-in-2023/) and using [`micromamba`](https://mamba.readthedocs.io/en/latest/user_guide/micromamba.html), a tiny version of the `mamba` package manager. It is a C++ executable and therefore does not have or need a base python environment. 
+
+I will create micromamba environments for particular purposes, and readily delete them when no longer needed. Some of micromamba environments will be used only as the base environment for creating normal `venv` environments with packages installed with `pip`. See [Pip vs Conda: an in-depth comparison of Python’s two packaging systems](https://pythonspeed.com/articles/conda-vs-pip/) for a good comparison of pip vs conda.
+
+# Delete old miniconda tool and python environments
+
+See [Uninstall Miniconda on MacOS](https://stackoverflow.com/questions/60131438/uninstall-miniconda-on-macos).
+
+```
+$ rm -rf ~/.condarc ~/.conda ~/.continuum
+$ sudo rm -rf ~/opt/miniconda3
+```
+
+In `.bash_profile`, delete starting at `# added by Miniconda3 4.7.12 installer` through line `# <<< conda init <<<`.
+
+Delete python environments in consolidated location, `~/python_envs`:
+
+```
+$ ls -l python_envs/
+    total 0
+    drwxr-xr-x  3 nordin  staff   96 Jan 10  2022 panel_env
+    drwxr-xr-x  3 nordin  staff   96 Oct 23  2021 panel_voila_opencv
+    drwxr-xr-x  8 nordin  staff  256 Jul 23  2022 spectra_tools
+    drwxr-xr-x  5 nordin  staff  160 Jan 21  2021 voila_opencv
+
+$ rm -rf ~/python_envs
+```
+
+# Install and setup `micromamba`
+
+Use `curl` installation method at [Micromamba installation](https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html).
+
+```
+$ "${SHELL}" <(curl -L micro.mamba.pm/install.sh)
+    % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                    Dload  Upload   Total   Spent    Left  Speed
+    0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0
+    100  3069  100  3069    0     0   1913      0  0:00:01  0:00:01 --:--:--     0
+    Micromamba binary folder? [~/.local/bin]
+    Init shell (bash)? [Y/n] Y
+    Configure conda-forge? [Y/n] Y
+    Prefix location? [~/micromamba]
+    Modifying RC file "/Users/nordin/.bash_profile"
+    Generating config for root prefix "/Users/nordin/micromamba"
+    Setting mamba executable to: "/Users/nordin/.local/bin/micromamba"
+    Adding (or replacing) the following in your "/Users/nordin/.bash_profile" file
+
+    # >>> mamba initialize >>>
+    # !! Contents within this block are managed by 'mamba init' !!
+    export MAMBA_EXE='/Users/nordin/.local/bin/micromamba';
+    export MAMBA_ROOT_PREFIX='/Users/nordin/micromamba';
+    __mamba_setup="$("$MAMBA_EXE" shell hook --shell bash --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$__mamba_setup"
+    else
+        alias micromamba="$MAMBA_EXE"  # Fallback on help from mamba activate
+    fi
+    unset __mamba_setup
+    # <<< mamba initialize <<<
+
+    Please restart your shell to activate micromamba or run the following:\n
+    source ~/.bashrc (or ~/.zshrc, ~/.xonshrc, ~/.config/fish/config.fish, ...)
+```
+
+Add `alias conda="micromamba"` to `.bash_profile`.
+
+Open new `bash` shell in `Warp` terminal and confirm micromamba version, channels, platform, etc.:
+
+```
+$ micromamba --version
+    1.5.6
+# Make sure that conda alias works
+$ conda --version
+    1.5.6
+
+# Get info
+$ conda info
+
+       libmamba version : 1.5.6
+     micromamba version : 1.5.6
+           curl version : libcurl/8.5.0 SecureTransport (OpenSSL/3.2.0) zlib/1.2.13 zstd/1.5.5 libssh2/1.11.0 nghttp2/1.58.0
+     libarchive version : libarchive 3.7.2 zlib/1.2.13 bz2lib/1.0.8 libzstd/1.5.5
+       envs directories : /Users/nordin/micromamba/envs
+          package cache : /Users/nordin/micromamba/pkgs
+                          /Users/nordin/.mamba/pkgs
+            environment : None (not found)
+           env location : -
+      user config files : /Users/nordin/.mambarc
+ populated config files : /Users/nordin/.condarc
+       virtual packages : __unix=0=0
+                          __osx=13.3.1=0
+                          __archspec=1=arm64
+               channels : https://conda.anaconda.org/conda-forge/osx-arm64
+                          https://conda.anaconda.org/conda-forge/noarch
+                          https://conda.anaconda.org/nodefaults/osx-arm64
+                          https://conda.anaconda.org/nodefaults/noarch
+       base environment : /Users/nordin/micromamba
+               platform : osx-arm64
+
+# Check and see if there is a more recent version
+$ micromamba self-update
+    nodefaults/osx-arm64 (check zst)                    Checked  0.3s
+    nodefaults/noarch (check zst)                       Checked  0.4s
+    nodefaults/noarch                                  116.0 B @ 875.0 B/s  0.1s
+    nodefaults/osx-arm64                               125.0 B @ 819.0 B/s  0.2s
+    conda-forge/osx-arm64                                8.1MB @   5.7MB/s  1.4s
+    conda-forge/noarch                                  13.2MB @   6.7MB/s  2.0s
+
+    Your micromamba version (1.5.6) is already up to date.
+```
+
+# Create python environments
+
+## `default`
+
+```
+$ micromamba create -n default python
+    conda-forge/osx-arm64                                       Using cache
+    conda-forge/noarch                                          Using cache
+    nodefaults/osx-arm64                                          No change
+    nodefaults/noarch                                             No change
+
+    Transaction
+
+    Prefix: /Users/nordin/micromamba/envs/default
+
+    Updating specs:
+
+    - python
+
+
+    Package               Version  Build               Channel          Size
+    ────────────────────────────────────────────────────────────────────────────
+    Install:
+    ────────────────────────────────────────────────────────────────────────────
+
+    + xz                    5.2.6  h57fd34a_0          conda-forge     236kB
+    + libexpat              2.5.0  hb7217d7_1          conda-forge      63kB
+    + ncurses                 6.4  h463b476_2          conda-forge     795kB
+    + bzip2                 1.0.8  h93a5062_5          conda-forge     122kB
+    + libffi                3.4.2  h3422bc3_5          conda-forge      39kB
+    + libzlib              1.2.13  h53f4e23_5          conda-forge      48kB
+    + ca-certificates  2023.11.17  hf0a4a13_0          conda-forge     154kB
+    + readline                8.2  h92ec313_1          conda-forge     250kB
+    + tk                   8.6.13  h5083fa2_1          conda-forge       3MB
+    + libsqlite            3.44.2  h091b4b1_0          conda-forge     815kB
+    + openssl               3.2.0  h0d3ecfb_1          conda-forge       3MB
+    + tzdata                2023d  h0c530f3_0          conda-forge     120kB
+    + python               3.12.1  hdf0ec26_1_cpython  conda-forge      13MB
+    + wheel                0.42.0  pyhd8ed1ab_0        conda-forge      58kB
+    + setuptools           69.0.3  pyhd8ed1ab_0        conda-forge     471kB
+    + pip                  23.3.2  pyhd8ed1ab_0        conda-forge       1MB
+
+    Summary:
+
+    Install: 16 packages
+
+    Total download: 24MB
+
+    ────────────────────────────────────────────────────────────────────────────
+
+
+    Confirm changes: [Y/n] y
+
+    Transaction starting
+    libexpat                                            63.4kB @ 643.0kB/s  0.1s
+    libffi                                              39.0kB @ 323.3kB/s  0.1s
+    bzip2                                              122.3kB @ 670.9kB/s  0.2s
+    xz                                                 235.7kB @   1.1MB/s  0.2s
+    wheel                                               57.6kB @ 251.3kB/s  0.1s
+    ncurses                                            794.7kB @   2.6MB/s  0.3s
+    libzlib                                             48.1kB @ 150.5kB/s  0.1s
+    ca-certificates                                    154.4kB @ 366.7kB/s  0.1s
+    tzdata                                             119.6kB @ 280.9kB/s  0.1s
+    readline                                           250.4kB @ 400.6kB/s  0.2s
+    libsqlite                                          815.3kB @ 843.4kB/s  0.3s
+    openssl                                              2.9MB @   2.9MB/s  0.9s
+    tk                                                   3.1MB @   2.9MB/s  0.9s
+    setuptools                                         470.5kB @ 414.7kB/s  0.2s
+    pip                                                  1.4MB @   1.2MB/s  0.8s
+    python                                              13.1MB @   6.0MB/s  1.9s
+    Linking xz-5.2.6-h57fd34a_0
+    Linking libexpat-2.5.0-hb7217d7_1
+    Linking ncurses-6.4-h463b476_2
+    Linking bzip2-1.0.8-h93a5062_5
+    Linking libffi-3.4.2-h3422bc3_5
+    Linking libzlib-1.2.13-h53f4e23_5
+    Linking ca-certificates-2023.11.17-hf0a4a13_0
+    Linking readline-8.2-h92ec313_1
+    Linking tk-8.6.13-h5083fa2_1
+    Linking libsqlite-3.44.2-h091b4b1_0
+    Linking openssl-3.2.0-h0d3ecfb_1
+    Linking tzdata-2023d-h0c530f3_0
+    Linking python-3.12.1-hdf0ec26_1_cpython
+    Linking wheel-0.42.0-pyhd8ed1ab_0
+    Linking setuptools-69.0.3-pyhd8ed1ab_0
+    Linking pip-23.3.2-pyhd8ed1ab_0
+
+    Transaction finished
+
+    To activate this environment, use:
+
+        micromamba activate default
+
+    Or to execute a single command in this environment, use:
+
+        micromamba run -n default mycommand
+
+$ micromamba activate default
+$ conda env list
+  Name     Active  Path
+──────────────────────────────────────────────────────────
+  base             /Users/nordin/micromamba
+  default  *       /Users/nordin/micromamba/envs/default
+$ micromamba env list
+  Name     Active  Path
+──────────────────────────────────────────────────────────
+  base             /Users/nordin/micromamba
+  default  *       /Users/nordin/micromamba/envs/default
+$ which python
+    /Users/nordin/micromamba/envs/default/bin/python
+$ python --version
+    Python 3.12.1
+$ python -c "import platform; print(platform.processor())"
+    arm
+```
+
+
+
+
+---
+# OLD
+
 # Motivation
 
 Several years ago I created a base Anaconda installation with the current python version, Python 3.6. For a time I added packages as needed to this environment as I did various projects. I also created conda environments to get more recent python versions.
