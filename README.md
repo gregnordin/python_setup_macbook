@@ -6,7 +6,7 @@ Updated 1/15/24.
 
 # Motivation
 
-In early 2022 when I transferred my files and projects from a 2018 MacBook Pro (Intel i7) to a new 2021 M1 Max MacBook Pro (Apple Silicon), my miniconda installation came with it, which means my base environment is still for Intel processors. I've had problems lately with installing Apple Silicon-specific python packages and am just deleting miniconda and my python environments and start from scratch. 
+In early 2022 when I transferred my files and projects from a 2018 MacBook Pro (Intel i7) to a new 2021 M1 Max MacBook Pro (Apple Silicon), my miniconda installation came with it, which means my base environment is still for Intel processors. I've had problems lately with installing Apple Silicon-specific python packages so I am deleting miniconda and my python environments and starting from scratch. 
 
 # Approach
 
@@ -236,8 +236,19 @@ $ python --version
 $ python -c "import platform; print(platform.processor())"
     arm
 ```
+# Jupyter
 
+## Delete old Jupyter stuff so I can start with a clean slate
 
+    $ rm -rf ~/.jupyter/
+    $ rm -rf ~/Library/Jupyter
+    $ rm -rf /usr/local/share/jupyter/kernels/*
+
+# New Jupyter conda environment
+
+```
+micromamba create -n jupyter_2401 jupyterlab
+```
 
 
 ---
