@@ -236,6 +236,23 @@ $ python --version
 $ python -c "import platform; print(platform.processor())"
     arm
 ```
+
+# Create new virtual environment and add as a Jupyter kernel
+
+```
+$ micromamba activate default
+# Be sure you are in the directory in which you want to locate the virtual environment directory
+$ cd <desired_directory>
+$ python -m venv venv
+$ source venv/bin/activate
+$ pip install ipykernel
+$ python -m ipykernel install --user --name <env_name> --display-name="<env_name>"
+$ jupyter kernelspec list
+    Available kernels:
+        <env_name>
+        ...
+```
+
 # Jupyter
 
 ## Delete old Jupyter stuff so I can start with a clean slate
